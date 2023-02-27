@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate off
+
+actor consumer
+control PartnerController
+
+
+
+consumer-> PartnerController: DELETE /partner/{id}/game/{id}
+PartnerController-> GamerService : findById(Long id)
+alt  game not found
+    PartnerController -> consumer: Game not found!
+else  game found
+    PartnerController-> PartnerService : deleteGame(Long id)
+    PartnerService -> GamerService: countGamesByOwner(Partner owner)
+    alt  numberOfGames == 1
+    PartnerService -> PartnerService: delete(Partner partner)
+    PartnerController-> consumer:The partner has been deleted because they no longer have games.
+
+    else numberOfGames > 1
+    PartnerService -> GamerService: delete(Game game)
+    PartnerController-> consumer: Game deleted successfully.
+    end
+end
+
+@enduml
