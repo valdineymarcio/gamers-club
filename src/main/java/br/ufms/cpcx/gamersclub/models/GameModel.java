@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Table(
         name = "TB_GAME",
         uniqueConstraints = {@UniqueConstraint(name = "TB_GAME_UQ", columnNames = {
-                "name", "console", "owner"})
+                "name", "console"})
         })
 @Data
 @NoArgsConstructor
@@ -35,6 +35,7 @@ public class GameModel implements Serializable {
         private String ownerPhoneNumber ;
 
         public void add(GameModel game) {
+
                 this.setPartnerModel(game.getPartnerModel());
         }
 

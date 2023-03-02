@@ -3,6 +3,7 @@ package br.ufms.cpcx.gamersclub.services;
 import br.ufms.cpcx.gamersclub.dtos.GameDto;
 import br.ufms.cpcx.gamersclub.models.ConsoleEnum;
 import br.ufms.cpcx.gamersclub.models.GameModel;
+import br.ufms.cpcx.gamersclub.models.PartnerModel;
 import br.ufms.cpcx.gamersclub.repositories.GameRepository;
 import br.ufms.cpcx.gamersclub.repositories.PartnerRepository;
 import jakarta.transaction.Transactional;
@@ -72,6 +73,31 @@ public class GameService {
     public Optional<GameModel> findByNameAndConsole(String name, ConsoleEnum console) {
         return this.gameRepository.findByNameAndConsole(name, console);
     }
+    @Transactional
+    public Optional<GameModel> updateGame(Long id, GameDto gameDTO) {
+        Optional<GameModel> gamerModel = this.gameRepository.findById(id);
+        gamerModel.ifPresent(game -> {
+            game.setName(gameDTO.getName());
+            game.setConsole(gameDTO.getConsole());
+        });
+        return gamerModel;
+    }
 
 
+    @Transactional
+    public void deleteGame(GameModel game) {
+        this.gameRepository.delete(game);
+    }
+    @Transactional
+    public Optional<GameModel> deleteGameById(Long gameId) throws Exception {
+        Optional<GameModel> game = this.gameRepository.findById(gameId);
+        if (game.isPresent()) {
+            PartnerModel partner = game.get().getPartnerModel();
+            partner.getGames().remove(game.get());
+            if (partner.getGames().isEmpty()) {
+                this.partnerRepository.delete(partner);
+            }
+        }
+        return game;
+    }
 }

@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "partner",
+@Table(name = "TB_PARTNER",
         uniqueConstraints = {@UniqueConstraint(name = "partner_uq", columnNames = {
                 "name", "phoneNumber"})})
 public class PartnerModel {
@@ -24,10 +24,11 @@ public class PartnerModel {
     private String name;
     @Column(nullable = false, length = 15)
     private String phoneNumber;
-    @OneToMany(mappedBy = "partner", cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToMany(mappedBy = "TB_PARTNER", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<GameModel> games = new HashSet<>();
     @JsonIgnore
     public void setGames(Set<GameModel> games) {
+
         this.games.addAll(games);
     }
 
