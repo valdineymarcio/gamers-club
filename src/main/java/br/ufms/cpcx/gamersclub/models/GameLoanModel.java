@@ -9,12 +9,14 @@ import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class GameLoanModel {
+public class GameLoanModel implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     private int id;
     @OneToOne

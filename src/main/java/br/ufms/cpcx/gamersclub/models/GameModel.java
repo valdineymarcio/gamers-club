@@ -8,14 +8,16 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(
         name = "TB_GAME",
         uniqueConstraints = {@UniqueConstraint(name = "TB_GAME_UQ", columnNames = {
                 "name", "console"})
         })
-@Data
-@NoArgsConstructor
+
 public class GameModel implements Serializable {
+        private static final long serialVersionUID = 1L;
         @ManyToOne
         @JsonIgnore
         protected PartnerModel partnerModel;
