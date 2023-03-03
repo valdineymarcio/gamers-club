@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -16,7 +17,8 @@ import java.util.Set;
 @Table(name = "TB_PARTNER",
         uniqueConstraints = {@UniqueConstraint(name = "partner_uq", columnNames = {
                 "name", "phoneNumber"})})
-public class PartnerModel {
+public class PartnerModel implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

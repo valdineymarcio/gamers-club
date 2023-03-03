@@ -53,13 +53,20 @@ public class GameService {
         gameRepository.delete(gameModel);
     }
 
-    public Page<GameModel> findAll(Pageable pageable) {
-        return gameRepository.findAll((org.springframework.data.domain.Pageable) pageable);
+    public Page<GameModel> findAll(Pageable page) {
+        return this.gameRepository.findAll((org.springframework.data.domain.Pageable) page);
     }
 
     public Optional<GameModel> findById(Long id) {
-        return gameRepository.findById(id);
+        return this.gameRepository.findById(id);
     }
+//    public Page<GameModel> findAll(Pageable pageable) {
+//        return gameRepository.findAll((org.springframework.data.domain.Pageable) pageable);
+//    }
+//
+//    public Optional<GameModel> findById(Long id) {
+//        return gameRepository.findById(id);
+//    }
 
     public boolean existsByNameAndConsoleAndOwner(String name, ConsoleEnum consoleEnum, String owner) {
         return gameRepository.existsByNameAndConsoleAndOwner(name, consoleEnum, owner);
